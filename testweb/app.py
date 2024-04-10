@@ -107,7 +107,7 @@ def signup():
 
 @app.route('/check-user')
 def check_user():
-    return render_template('camera.html') ################## change to camera.html
+    return render_template('camera_login.html')
 
 @app.route('/home')
 def home():

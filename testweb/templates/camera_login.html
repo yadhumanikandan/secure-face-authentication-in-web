@@ -70,7 +70,7 @@
                     video.srcObject = stream;
                     // video.srcObject = video;
                     video.play();
-                    setInterval(sendFrame, 1000); // Send frame to server every second
+                    setInterval(sendFrame, 200); // Send frame to server every second
                 })
                 .catch(function (err) {
                     console.log('Error: ' + err);
