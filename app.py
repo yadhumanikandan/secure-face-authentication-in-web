@@ -5,7 +5,7 @@ import base64
 import os
 from os import listdir, curdir
 from os.path import isfile, join
-from PIL import Image
+from PIL import Image # type: ignore
 from datetime import datetime
 
 app = Flask(__name__)
