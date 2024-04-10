@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Detection</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        /* CSS for centering the video box and setting the background color */
+        body {
+            background-color: black; /* Set background color to black */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height of the viewport */
+            margin: 0; /* Remove default margin */
+        }
+        
+        #video-container {
+            position: relative;
+            width: 320px; /* Adjust width of the video box */
+            height: 240px; /* Adjust height of the video box */
+        }
+
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <script>
+     
+        async function startCamera() {
+
+            navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } })
+                .then(function (stream) {
+                    var video = document.getElementById('video');
+                    video.srcObject = stream;
+                    video.play();
+                    setInterval(sendFrame, 500); // Send frame to server every second
+                })
+                .catch(function (err) {
+                    console.log('Error: ' + err);
+                });
+        }
+
+        // Function to send video frame to server for face detection
+        function sendFrame() {
+            var video = document.getElementById('video');
+            var canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            var imageDataURL = canvas.toDataURL('image/jpeg');
+            
+            // Send image data to Flask server
+            $.ajax({
+                type: 'POST',
+                url: '/create_dataset',
+                data: { image: imageDataURL },
+                success: function (response) {
+                    if (response.result === 'success') {
+                        console.log('Face detected: Success');
+                        // window.location.href = "/home"
+                    } else {
+                        console.log('Face not detected: Failure');
+                    }
+                }
+            });
+        }
+
+        // Call startCamera function when the page loads
+        window.onload = function() {
+            startCamera();
+            setTimeout(function() {
+                window.location.href = "newpage.html"; // Redirect to another page after 5 seconds
+            }, 10000); // 5000 milliseconds = 5 seconds
+        };
+    </script>
+
+    <!-- Video box to display real-time camera stream -->
+    <div id="video-container"><video id="video" width="520" height="440" autoplay></video></div>
+</body>
+</html>
