@@ -15,7 +15,6 @@ model = cv2.face.LBPHFaceRecognizer_create()
 def train_model():
     data_path = 'D:/DATAS/'
     onlyfiles = [f for f in listdir(data_path) if isfile(join(data_path,f))]
-
     Training_Data, Labels = [], []
 
     for i, files in enumerate(onlyfiles):
@@ -25,16 +24,12 @@ def train_model():
         Labels.append(i)
 
     Labels = np.asarray(Labels, dtype=np.int32)
-
     # model = cv2.face.LBPHFaceRecognizer_create()
-
     model.train(np.asarray(Training_Data), np.asarray(Labels))
-
     print("Dataset Model Training Complete!!!!!")
 
 
-def face_extractor_dataset_creation(img):
-
+def register_face_extractor_dataset_creation(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_classifier.detectMultiScale(gray,1.3,5)
 
@@ -47,16 +42,12 @@ def face_extractor_dataset_creation(img):
     return cropped_face
 
 
-def create_dataset_files(unique_name):
-
+def register_create_dataset_files(unique_name):
     img = cv2.imread('data/received_image.jpg')
-
-    if face_extractor_dataset_creation(img) is not None:
-    # count+=1
-        face = cv2.resize(face_extractor_dataset_creation(img),(200,200))
+    if register_face_extractor_dataset_creation(img) is not None:
+        face = cv2.resize(register_face_extractor_dataset_creation(img),(200,200))
         face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
         print(str(unique_name))
-        # file_name_path = 'D:/DATAS/'+str(count)+'.jpg'
         file_name_path = 'D:/DATAS/'+str(unique_name)+'.jpg'
 
         cv2.imwrite(file_name_path,face)
@@ -69,14 +60,10 @@ def create_dataset_files(unique_name):
         
         return False
 
-    # if cv2.waitKey(1)==13 or count==100:
-    #     break
 
-
-def face_detector(img, size = 0.5):
+def login_face_detector(img, size = 0.5):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_classifier.detectMultiScale(gray,1.3,5)
-
     if len(faces) == 0:
         return img,[]
 
@@ -88,30 +75,23 @@ def face_detector(img, size = 0.5):
     return img,roi
 
 
-def detect_img(img):
-    image, face = face_detector(img)
+def login_detect_img(img):
+    image, face = login_face_detector(img)
     img_path = os.path.join(curdir, 'received_image.jpg')
     cv2.imwrite(img_path, image)
-
     try:
         face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
         result = model.predict(face)
-
         if result[1] < 500:
             confidence = int(100*(1-(result[1])/300))
-
-
 
         if confidence > 82:
             cv2.putText(image, "yadhu", (250, 450), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
             cv2.imshow('Face Cropper', image)
             return True
-            # return redirect(url_for("home"))
-
         else:
             cv2.putText(image, "Unknown", (250, 450), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 255), 2)
             cv2.imshow('Face Cropper', image)
-
 
     except:
         cv2.putText(image, "Face Not Found", (250, 450), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 0, 0), 2)
