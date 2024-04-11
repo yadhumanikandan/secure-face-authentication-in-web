@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, session, jsonify
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session, jsonify  # type: ignore
+from werkzeug.security import generate_password_hash, check_password_hash  # type: ignore
 from . import db 
 from .models import User
 import cv2

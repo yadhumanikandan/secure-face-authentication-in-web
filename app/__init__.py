@@ -1,5 +1,5 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask  # type: ignore
+from flask_sqlalchemy import SQLAlchemy  # type: ignore
 from os import path
 # from flask_login import LoginManager
 
