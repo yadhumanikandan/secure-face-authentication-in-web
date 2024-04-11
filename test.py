@@ -3,10 +3,11 @@ import cv2
 import numpy as np
 import base64
 import os
-from os import listdir, curdir
+from os import listdir
 from os.path import isfile, join
-from PIL import Image
+# from PIL import Image
 from datetime import datetime
+import uuid
 
 
 
@@ -79,4 +80,30 @@ def create_dataset_files(time):
     # if cv2.waitKey(1)==13 or count==100:
     #     break
 
-create_dataset_files('djlfkjslkdj')
+unique_string = str(uuid.uuid4())
+print(unique_string)
+# bool1 = create_dataset_files(unique_string)
+
+create_dataset_files(unique_string)
+
+
+
+# @app.route("/create_dataset", methods=['POST'])
+# def create_dataset():
+#     img_data = request.form['image']
+#     img_bytes = base64.b64decode(img_data.split(',')[1])
+#     nparr = np.frombuffer(img_bytes, np.uint8) 
+#     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+#     current_time = datetime.now()
+#     current_time_str = current_time.strftime('%Y-%m-%d_%H:%M:%S')
+#     img_path = os.path.join(curdir, 'data/received_image.jpg')
+#     cv2.imwrite(img_path, image)
+
+#     unique_string = str(uuid.uuid4())
+
+#     bool1 = create_dataset_files(unique_string)
+
+#     if bool1:
+#         return jsonify({'result': 'success'})
+#     else:
+#         return jsonify({'result': 'failure'})

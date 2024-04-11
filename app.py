@@ -5,8 +5,7 @@ import base64
 import os
 from os import listdir, curdir
 from os.path import isfile, join
-from PIL import Image # type: ignore
-from datetime import datetime
+import uuid
 
 app = Flask(__name__)
 app.secret_key = "lasdfoh389h9qhweohpqe8hgqh9hqwh49hq9hgq9h"
@@ -53,7 +52,7 @@ def face_extractor_dataset_creation(img):
 
     return cropped_face
 
-def create_dataset_files(time):
+def create_dataset_files(unique_name):
 
     
     img = cv2.imread('data/received_image.jpg')
@@ -62,13 +61,13 @@ def create_dataset_files(time):
     # count+=1
         face = cv2.resize(face_extractor_dataset_creation(img),(200,200))
         face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
-        print(str(time))
+        print(str(unique_name))
         # file_name_path = 'D:/DATAS/'+str(count)+'.jpg'
-        file_name_path = 'D:/DATAS/'+str(time)+'.jpg'
+        file_name_path = 'D:/DATAS/'+str(unique_name)+'.jpg'
 
         cv2.imwrite(file_name_path,face)
 
-        cv2.putText(face,str(time),(50,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,0),2)
+        cv2.putText(face,str(unique_name),(50,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,0),2)
         cv2.imshow('Face Cropper',face)
         return True
     else:
@@ -173,8 +172,8 @@ def create_dataset():
     # Decode image
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    current_time = datetime.now()
-    current_time_str = current_time.strftime('%Y-%m-%d_%H:%M:%S')
+    # current_time = datetime.now()
+    # current_time_str = current_time.strftime('%Y-%m-%d_%H:%M:%S')
 
     # image = face_extractor_dataset_creation(image)
     # image, face = face_detector(image)
@@ -182,7 +181,11 @@ def create_dataset():
     img_path = os.path.join(curdir, 'data/received_image.jpg')
     cv2.imwrite(img_path, image)
 
-    bool1 = create_dataset_files(current_time_str)
+    unique_string = str(uuid.uuid4())
+    # print(unique_string)
+    bool1 = create_dataset_files(unique_string)
+
+    # bool1 = create_dataset_files(current_time_str)
     # bool1 = True
 
     if bool1:
@@ -221,3 +224,5 @@ def logout():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
+
+
