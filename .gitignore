@@ -1,3 +1,4 @@
 env/
 received_image.jpg
 __pycache__/
+instance/
