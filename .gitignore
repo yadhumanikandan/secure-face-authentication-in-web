@@ -2,3 +2,5 @@ env/
 received_image.jpg
 __pycache__/
 instance/
+data/received_image.jpg
+app/static/qr/*
