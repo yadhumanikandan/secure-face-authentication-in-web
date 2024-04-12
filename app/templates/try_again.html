@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Not detected - Secure Face Authentication{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    
+    <h1>Face not recognized!! </h1>
+    <p>Try to login again? <a href="{{ url_for('views.login') }}"><button class="btn btn-primary">Try again</button></a>.</p>
+    <p>Or Re-register your face here <a href="{{ url_for('views.show_qr') }}"><button class="btn btn-primary">Re-register face</button></a>.</p>
+    
+</div>
+    
+{% endblock %}

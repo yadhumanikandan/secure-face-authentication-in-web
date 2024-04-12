@@ -9,4 +9,5 @@ def generate_qrcode_png(data, file_name):
     img.save(path)
 
 
-generate_qrcode_png("https://google.com", "test")
+
+# generate_qrcode_png("https://google.com", "test")
