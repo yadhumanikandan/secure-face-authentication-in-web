@@ -15,3 +15,9 @@ Restart chrome
 ```
 git rm -r --cached .  
 ```
+
+## Esentials for running the web
+
+- virtual environment must be named `env`
+- `training_data/` directory should be created in the root directory
+- `data/` directory should be created in the root directory

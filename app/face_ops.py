@@ -7,13 +7,14 @@ from os.path import isfile, join
 
 cv2.face.LBPHFaceRecognizer_create() 
 
-face_classifier = cv2.CascadeClassifier('D:\\Code\\project\\haz\\env\\Lib\\site-packages\\cv2\\data\\haarcascade_frontalface_default.xml')
+face_classifier = cv2.CascadeClassifier('env\\Lib\\site-packages\\cv2\\data\\haarcascade_frontalface_default.xml')
+# face_classifier = cv2.CascadeClassifier('D:\\Code\\project\\haz\\env\\Lib\\site-packages\\cv2\\data\\haarcascade_frontalface_default.xml')
 
 model = cv2.face.LBPHFaceRecognizer_create()
 
 
 def train_model():
-    data_path = 'D:/DATAS/'
+    data_path = 'training_data/'
     onlyfiles = [f for f in listdir(data_path) if isfile(join(data_path,f))]
     Training_Data, Labels = [], []
 
@@ -48,7 +49,7 @@ def register_create_dataset_files(unique_name):
         face = cv2.resize(register_face_extractor_dataset_creation(img),(200,200))
         face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
         print(str(unique_name))
-        file_name_path = 'D:/DATAS/'+str(unique_name)+'.jpg'
+        file_name_path = 'training_data/'+str(unique_name)+'.jpg'
 
         cv2.imwrite(file_name_path,face)
         cv2.putText(face,str(unique_name),(50,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,0),2)
