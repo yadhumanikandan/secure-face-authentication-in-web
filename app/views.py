@@ -12,9 +12,10 @@ from . import db
 from .models import User
 from .qr import generate_qrcode_png
 from .send_mail import send_mail
+from .get_ip import get_ip_address
 
 
-SERVER_ADDRESS = "192.168.7.155:5000"
+SERVER_ADDRESS = f"{get_ip_address()}:5000"
 
 
 views = Blueprint("views", __name__)
